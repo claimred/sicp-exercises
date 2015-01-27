@@ -41,7 +41,7 @@
                     m))))
 
 (define (try-it a n)
-    (= (expmod a n n) a))
+    (= (expmod a n n) a)) ;;; Fermat theorem right here
 
 (define (fermat-test n)  
   (try-it (+ 1 (random (- n 1))) n))
