@@ -40,6 +40,8 @@
 
 ;;; 1.29 first try, working fine but
 ;;; I am not really sure about get-coeff procedure
+;;; 
+;;; we can use k, not x
 
 (define (integral-simpson f a b n)
   (define (is-helper h)
