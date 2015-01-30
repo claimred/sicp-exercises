@@ -43,7 +43,7 @@
   (try first-guess)
   (newline))
 
-(define (sqrt x)
+(define (sqrt1 x)
   (fixed-point (lambda (y) (average y (/ x y))) 1.0))
 
 ;;; 1.36
