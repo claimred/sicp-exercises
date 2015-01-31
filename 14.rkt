@@ -48,5 +48,34 @@
 (define (cubic a b c)
   (lambda (x) (+ (cube x) (* a (square x)) (* b x) c) ))
 
+(define (inc x)
+  (+ x 1))
 
+;;; 1.41
+(define (double f)
+  (lambda (x) (f (f x))))
+
+(define (dd f)
+  ((double double) f))
+
+;;; 1.42
+(define (compose f g)
+  (lambda (x) (f (g x))))
+
+;;; 1.43
+
+(define (identity x) x)
+
+#|(define (repeated f n)
+  (if (= n 0)
+      identity
+  (compose f (repeated f (- n 1)))))|#
+
+(define (repeated f n)
+  (define (iter i result)
+    (if (= i n)
+        result
+        (iter (+ i 1) (compose f result))))
+  (iter 0 identity)) ;;; (iter 1 f)
+    
 
