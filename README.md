@@ -1,2 +1,2 @@
-# sicp-exersises
-Reading SICP and doing exersises
+# sicp-exercises
+Reading SICP and doing exercises
