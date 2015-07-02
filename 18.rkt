@@ -107,6 +107,33 @@
         ((and (>= x1 0) (>= y1 0) (>= x2 0) (>= y2 0)) ;; (33)
          (make-interval (* x1 x2) (* y1 y2))))))
 
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2.0))
+
+(define (width i)
+  (/ (- (upper-bound i) (lower-bound i)) 2.0))
+
+;;; 2.12
+;; e = r(i) / c * 100%
+(define (make-center-percent c e )
+  (make-center-width c (/ (* e c) 1) ) )
+
+(define (percent i)
+  (* 1 (/ (radius-interval i) (center i))))
+
+;;; 2.13
+;; Considering only positive intervals
+;; e1 ~ 0, e2 ~ 0
+;; ] a = (c1, e1), b = (c2, e2) -> [c1 - e1 * c1; c1 + e1 * c1], [c2 - e2 * c2; c2 + e2 * c2]
+;; mul(a,b) = [c1 * c2 * (1 - e1) * (1 - e2); c1 * c2 * (1 + e1) * (1 + e2)] =
+;; = [c1 * c2 * (1 - e2 - e1 + e1 * e2); c1 * c2 * (1 + e2 + e1 + e1 * e2)] =
+;; e1 * e2 ~~ 0
+;; = [c1 * c2 - c1 * c2 * (e1 + e2); c1 * c2 + c1 * c2 * (e1 + e2)
+;; Hence, e(mul(a * b)) = e(a) + e(b), if e(a) ~ 0 & e(b) ~ 0
+
 (define (unit-test x1 y1 x2 y2)
   (display "\n")
   (display-interval (make-interval x1 y1))
