@@ -5,7 +5,15 @@
 (define (make-interval a b)
   (if (< a b)
       (cons a b)
-      (cons b a)))  
+      (cons b a)))
+
+(define (display-interval i)
+  (display "[")
+  (display (lower-bound i))
+  (display "; ")
+  (display (upper-bound i))
+  (display "]"))
+
 
 (define (lower-bound i)
   (car i))
@@ -60,5 +68,72 @@
 ;; r = 5
 ;; [4, 5] * [0, 5] = [0, 25]
 ;; r = 12.5
+
+;;; 2.11
+;; Three states for each interval
+;;         (1)         (2)          (3)
+;; -----[------]----[---0---]----[------]----->
+;;
+;; Hence, 3 * 3 = 9 cases
+;; (11, 12, 13,
+;;  21, 22, 23,
+;;  31, 32, 33)
+;; 
+(define (mul-interval-smart x y)
+  (let ((x1 (lower-bound x)) 
+        (y1 (upper-bound x))
+        (x2 (lower-bound y))
+        (y2 (upper-bound y)))
+  (cond ((and (< x1 0) (< y1 0) (< x2 0) (< y2 0)) ;; (11)
+         (make-interval (* x1 x2) (* y1 y2)))
+        ((and (< x1 0) (< y1 0) (< x2 0) (>= y2 0)) ;; (12)
+         (make-interval (* x1 y2) (* x1 x2)))
+        ((and (< x1 0) (< y1 0) (>= x2 0) (>= y2 0)) ;; (13)
+         (make-interval (* x1 y2) (* y1 x2)))
+
+        ((and (< x1 0) (>= y1 0) (< x2 0) (< y2 0)) ;; (21)
+         (make-interval (* y1 x2) (* x1 x2)))
+
+        ((and (< x1 0) (>= y1 0) (< x2 0) (>= y2 0)) ;; (22)
+         (make-interval (min (* x1 y2) (* y1 x2))  (max (* y1 y2) (* x1 x2)))) ;; 1 case where 2 muls are not enough
+        
+        ((and (< x1 0) (>= y1 0) (>= x2 0) (>= y2 0)) ;; (23)
+         (make-interval (* x1 y2) (* y1 y2)))
+
+        ((and (>= x1 0) (>= y1 0) (< x2 0) (< y2 0)) ;; (31)
+         (make-interval (* y1 x2) (* x1 y2)))
+        ((and (>= x1 0) (>= y1 0) (< x2 0) (>= y2 0)) ;; (32)
+         (make-interval (* x2 y1) (* y1 y2)))
+        ((and (>= x1 0) (>= y1 0) (>= x2 0) (>= y2 0)) ;; (33)
+         (make-interval (* x1 x2) (* y1 y2))))))
+
+(define (unit-test x1 y1 x2 y2)
+  (display "\n")
+  (display-interval (make-interval x1 y1))
+  (display " * ")
+  (display-interval (make-interval x2 y2))
+  (display "\n")
+  (display "Normal mul: ")
+  (display-interval (mul-interval (make-interval x1 y1) (make-interval x2 y2)))
+  (display "\n")
+  (display "\"Smart\" mul: ")
+  (display-interval (mul-interval-smart (make-interval x1 y1) (make-interval x2 y2)))
+  (display "\n"))
+  
+
+(define (test)
+  (unit-test -1 -4 -5 -10)
+  (unit-test -1 -4 -5 10)
+  (unit-test -1 -4 5 10)
+  
+  (unit-test -1 4 -5 -10)
+  (unit-test -1 4 -5 10)
+  (unit-test -1 4 5 10)
+
+  (unit-test 1 4 -5 -10)
+  (unit-test 1 4 -5 10)
+  (unit-test 1 4 5 10))
+#|  (unit-test -2 3 2 3)
+  (unit-test 2 3 -2 3))|#
   
   
