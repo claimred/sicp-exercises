@@ -28,3 +28,12 @@
   (if (null? (cdr l))
       (list (car l))
       (last-pair (cdr l))))
+
+;;; 2.18
+
+(define (list-reverse l)
+  (if (null? (cdr l))
+      (car l)
+  (cons (list-reverse (cdr l)) (car l))))
+
+  
