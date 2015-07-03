@@ -33,7 +33,12 @@
 
 (define (list-reverse l)
   (if (null? (cdr l))
-      (car l)
-  (cons (list-reverse (cdr l)) (car l))))
+      (list (car l)) 
+  (list-append (list-reverse (cdr l)) (list (car l)))))
+
+(define (test)
+  (list-append (list 1 2 3 4 5) (list-reverse (list 1 2 3 4 5))))
+
+
 
   
