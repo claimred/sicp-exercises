@@ -57,7 +57,7 @@
 ;; r = (y1 + y2 - x1 - x2) / 2
 ;; r = (y1 - x1) / 2 + (y2 - x2) / 2
 ;; r = r1 + r2
-;; "-"
+;; "-"'
 ;; [x1 - y2; y1 - x2]
 ;; r = (y1 - x2 - x1 + y2) / 2
 ;; r = (y1 - x1) / 2 + (y2 - x2) / 2
@@ -133,6 +133,25 @@
 ;; e1 * e2 ~~ 0
 ;; = [c1 * c2 - c1 * c2 * (e1 + e2); c1 * c2 + c1 * c2 * (e1 + e2)
 ;; Hence, e(mul(a * b)) = e(a) + e(b), if e(a) ~ 0 & e(b) ~ 0
+
+;;; 2.14, 2.15, 2.16
+;; It seems to me that the problem lies in the fact that A/A != 1 (1: x * 1 = x)
+(define (par1 r1 r2)
+  (div-interval (mul-interval r1 r2) (add-interval r1 r2)))
+
+(define (par2 r1 r2)
+  (let ((x (make-interval 1 1)))
+  (div-interval x
+                (add-interval (div-interval x r1)
+                              (div-interval x r2)))))
+
+(define (214-test) 
+  (let ((A (make-center-percent 1 0.001)) (B (make-center-percent 10 0.001)))
+    (display-interval (div-interval A A))
+    (display-interval (div-interval B B))
+    (display-interval (div-interval A B))
+    (display-interval (div-interval B A))))
+  
 
 (define (unit-test x1 y1 x2 y2)
   (display "\n")
