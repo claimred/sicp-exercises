@@ -33,13 +33,15 @@
         (iter (cdr things)
               ;; (cons (square (car things)) answer)))) ;; -> (cons first nil) -> (cons second (cons first nil)), reverse order
               ;; (cons answer (square (car things)))))) ;; -> (cons first nil) -> (cons (cons first nil) second), its not a list
-              (list-append answer (list (square (car things))))))) ;; correct iterative implementation
-              
-          
+              (list-append answer (list (square (car things))))))) ;; correct iterative implementation                     
   (iter items nil))
+
+;;; 2.23
+
+(define (for-each proc items)
+  (cond ((null? items) true)
+        (else (proc (car items)) (for-each proc (cdr items)) )))
     
-
-
 (define (test)
   (display (map (lambda (x) (+ x 2)) (list 1 2 3 4 5)))
   (newline)
