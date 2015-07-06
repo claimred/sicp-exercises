@@ -106,16 +106,16 @@
   (list length structure))
 
 (define (left-branch m)
-  (car m))
+  (car m)) 
 
 (define (right-branch m)
-  (cadr m))
+  (cadr m)) ;; (cdr) instead of (cadr) if we change "list" to "cons" in constructors
 
 (define (branch-length b)
   (car b))
 
 (define (branch-structure b)
-  (cadr b))
+  (cadr b)) ;; (cdr) instead of (cadr) if we change "list" to "cons" in constructors
 
 (define (total-weight m)
   (if (not (pair? m))
@@ -133,7 +133,24 @@
             false))))
 
 
+ 
+(define level-1-mobile (make-mobile (make-branch 2 1) 
+                                    (make-branch 1 2))) 
+(define level-2-mobile (make-mobile (make-branch 3 level-1-mobile) 
+                                    (make-branch 9 1))) 
+(define level-3-mobile (make-mobile (make-branch 4 level-2-mobile) 
+                                    (make-branch 8 2)))
+
+(define (test4)
+ (balanced? (make-mobile (make-branch 2 3) 
+                         (make-branch 3 2))) 
+ (balanced? level-1-mobile) 
+ (balanced? level-2-mobile) 
+ (balanced? level-3-mobile) 
   
+ (balanced? (make-mobile (make-branch 10 1000) 
+                         (make-branch 1 level-3-mobile)))) 
+    
 (define mob1 (make-mobile (make-branch 3 4) (make-branch 4 (make-mobile (make-branch 1 2) (make-branch 2 1)))))
 
 (define (test3)
