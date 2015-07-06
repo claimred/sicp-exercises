@@ -82,5 +82,69 @@
           (list (deep-reverse (car l)))
           (list (car l)))
        (list-append (deep-reverse (cdr l)) (deep-reverse (list (car l))))))
+
+;;; 2.28
+
+(define (fringe l)
+  (if (null? (cdr l))
+      (if (pair? (car l))
+          (fringe (car l))
+          (list (car l)))
+      (list-append (fringe (list (car l))) (fringe (cdr l)))))
+
+(define (test2)
+  (display (fringe (list (list -4 -1) 0 (list 1 2) (list 3 (list 6 7) (list 4 5)))))
+  (newline)
+  (display (deep-reverse (list (list -4 -1) 0 (list 1 2) (list 3 (list 6 7) (list 4 5))))))
+            
+;;; 2.29
+
+(define (make-mobile left right)
+  (list left right))
+
+(define (make-branch length structure)
+  (list length structure))
+
+(define (left-branch m)
+  (car m))
+
+(define (right-branch m)
+  (cadr m))
+
+(define (branch-length b)
+  (car b))
+
+(define (branch-structure b)
+  (cadr b))
+
+(define (total-weight m)
+  (if (not (pair? m))
+      m
+      (+ (total-weight (branch-structure (left-branch m)))
+         (total-weight (branch-structure (right-branch m))))))
+
+(define (balanced? m)
+  (if (not (pair? m))
+      true    
+      (let ((bl (* (branch-length (left-branch m)) (total-weight (branch-structure (left-branch m)))))
+            (br (* (branch-length (right-branch m)) (total-weight (branch-structure (right-branch m))))))
+        (if (and (= bl br) (balanced? (branch-structure (left-branch m))) (balanced? (branch-structure (right-branch m))))
+            true
+            false))))
+
+
   
+(define mob1 (make-mobile (make-branch 3 4) (make-branch 4 (make-mobile (make-branch 1 2) (make-branch 2 1)))))
+
+(define (test3)
+  (display mob1)
+  (newline)
+  (display "weight: ")
+  (display (total-weight mob1))
+  (newline)
+  (if (balanced? mob1)
+      (display "Mobile is balanced.")
+      (display "Mobile is not balanced.")))
+
+
 
