@@ -63,3 +63,24 @@
  (cons x y) -> (mcons (list 1 2 3) (list 4 5 6))
  (list x y) -> (mcons (list 1 2 3) (mcons (list 4 5 6) '()))
 |#
+
+;;; 2.27
+
+(define (list-append l1 l2)
+  (if (null? l1)
+      l2
+      (cons (car l1) (list-append (cdr l1) l2))))
+
+(define (list-reverse l)
+  (if (null? (cdr l))
+      (list (car l)) 
+      (list-append (list-reverse (cdr l)) (list (car l)))))
+
+(define (deep-reverse l)
+  (if (null? (cdr l))
+      (if (pair? (car l))
+          (list (deep-reverse (car l)))
+          (list (car l)))
+       (list-append (deep-reverse (cdr l)) (deep-reverse (list (car l))))))
+  
+
