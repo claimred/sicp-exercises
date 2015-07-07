@@ -50,3 +50,15 @@
   (accumulate (lambda (this-coeff higher-terms) (+ this-coeff (* x higher-terms)) )
               0
               coefficient-sequence))
+
+;;; 2.35
+
+(define (count-leaves tree)
+  (accumulate (lambda (x y) (+ 1 y)) 0 (map (lambda (x) x) (enumerate-tree tree))))
+
+;; Without enumerate-tree, using recursion
+#|(define (count-leaves tree)
+  (accumulate + 0 (map (lambda (x)
+                         (if (not (pair? x))
+                             1
+                             (count-leaves x))) tree)))|#
