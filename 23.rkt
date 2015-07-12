@@ -62,3 +62,13 @@
                          (if (not (pair? x))
                              1
                              (count-leaves x))) tree)))|#
+
+;;; 2.36
+
+(define (accumulate-n op init seqs)
+  (if (null? (car seqs))
+      nil
+      (cons (accumulate op init (map (lambda (x) (car x)) seqs))
+            (accumulate-n op init (map (lambda (x) (cdr x)) seqs)))))
+
+;; (accumulate-n + 0 (list (list 1 2) (list 4 5)))
