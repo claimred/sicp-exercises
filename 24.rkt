@@ -55,6 +55,14 @@
 ;; (fold-left list nil (list 1 2 3)) = (((() 1) 2) 3)
 ;; op must be commutative (and associative?)
 
+;;; 2.39
+
+(define (reverse1 seq)
+  (fold-right (lambda (x y) (append y (list x))) nil seq))
+
+(define (reverse2 seq)
+  (fold-left (lambda (x y) (cons y x)) nil seq))
+
 (define (test2)
   (fold-right / 1 (list 1 2 3))
   (fold-left / 1 (list 1 2 3)))
