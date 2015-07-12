@@ -35,3 +35,26 @@
   (transpose matr1))
   ;;(matrix-*-vector matr1 vect1))
 
+
+;;; 2.38
+
+(define (fold-left op init seq)
+  (define (iter result rest)
+    (if (null? rest)
+        result
+        (iter (op result (car rest))
+              (cdr rest))))
+  (iter init seq))
+
+(define (fold-right op init seq)
+  (accumulate op init seq))
+
+;; (fold-right / 1 (list 1 2 3)) = (/ 1 (/ 2 (/ 3 1))) = 3/2
+;; (fold-left / 1 (list 1 2 3)) = (/ (/ (/ 1 1) 2) 3) = 1/6
+;; (fold-right list nil (list 1 2 3)) = (1 (2 (3 ())))
+;; (fold-left list nil (list 1 2 3)) = (((() 1) 2) 3)
+;; op must be commutative (and associative?)
+
+(define (test2)
+  (fold-right / 1 (list 1 2 3))
+  (fold-left / 1 (list 1 2 3)))
