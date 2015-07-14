@@ -98,3 +98,27 @@
            (display numb)
            numb)) (enumerate-interval 1 11)))  
 
+
+;;; 2.43
+
+(define (queens-new board-size)
+  (define (queen-cols k)
+    (if (= k 0)
+        (list empty-board)
+        (filter
+         (lambda (positions) (safe? k positions))
+         (flatmap
+          (lambda (new-row)
+            (map (lambda (rest-of-queens)
+                   (adjoin-position new-row k rest-of-queens))
+                 (queen-cols (- k 1))))
+          (enumerate-interval 1 board-size)))))
+  (queen-cols board-size))
+
+;;; Let boardsize = 8 and t(queens 8) = T
+#| (1 2 3 4 5 6 7 8) -> 8 calls of (map .. (queen-cols (- k 1)) and another 8 calls in each one of them, so
+   t(queens-new 8) = 8 * ( t(map (queen-cols 7)) + 8 * ( t(map (queen-cols 6)) + ... )
+   On the other hand,
+   t(queens-new 8) = t(map (queen-cols 7)) + t(map (queen-cols 6)) + ...
+
+   Basically, change of nested maps changes linear recursion to tree recursion |#
