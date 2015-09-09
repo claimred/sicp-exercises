@@ -116,7 +116,7 @@
   (queen-cols board-size))
 
 ;;; Let boardsize = 8 and t(queens 8) = T
-#| (1 2 3 4 5 6 7 8) -> 8 calls of (map .. (queen-cols (- k 1)) and another 8 calls in each one of them, so
+#| (1 2 3 4 5 6 7 8) -> 8 (or 9 if you count k = 0) calls of (map .. (queen-cols (- k 1)) and another 8 calls in each one of them, so
    t(queens-new 8) = 8 * ( t(map (queen-cols 7)) + 8 * ( t(map (queen-cols 6)) + ... )
    On the other hand,
    t(queens-new 8) = t(map (queen-cols 7)) + t(map (queen-cols 6)) + ...
