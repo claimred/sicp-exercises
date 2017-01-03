@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define dx 0.00001)
 

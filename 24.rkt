@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 ;;(map (lambda (x) (+ x 1)) (list 1 2 3 4))
 
