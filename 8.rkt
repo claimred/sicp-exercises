@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define pi 3.1415926535)
 

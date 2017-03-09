@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (gcd a b)
   (if (= b 0)

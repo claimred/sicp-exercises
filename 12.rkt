@@ -1,4 +1,4 @@
-#lang planet neil/sicp
+#lang sicp
 
 (define (func x y)
   (let ((a (+ 1 (* x y)))
