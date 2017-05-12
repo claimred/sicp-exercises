@@ -1,4 +1,4 @@
 # sicp-exercises
 Reading SICP and doing exercises
 
-last one complete: 2.52
+last one completed: 2.53
